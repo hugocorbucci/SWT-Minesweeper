@@ -25,5 +25,6 @@ public class BoardClickListener extends MouseAdapter {
 		int column = e.x * board.getWidth() / canvasSize.x;
 
 		controller.open(line, column);
+		canvas.redraw();
 	}
 }

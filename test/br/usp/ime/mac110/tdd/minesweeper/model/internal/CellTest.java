@@ -37,4 +37,22 @@ public class CellTest {
 		cell.increment();
 		assertThat(cell.getValue(), is("X"));
 	}
+	
+	@Test
+	public void newCellShouldNotBeOpen() throws Exception {
+		assertThat(cell.isOpen(), is(false));
+	}
+	
+	@Test
+	public void afterOpeningCellItShouldBeOpen() throws Exception {
+		cell.open();
+		assertThat(cell.isOpen(), is(true));
+	}
+	
+	@Test
+	public void openingCellTwiceShouldLeaveItOpen() throws Exception {
+		cell.open();
+		cell.open();
+		assertThat(cell.isOpen(), is(true));
+	}
 }

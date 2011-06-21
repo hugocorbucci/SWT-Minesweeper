@@ -39,10 +39,14 @@ public class Board implements MineSweeperBoard {
 	}
 
 	public boolean isOpen(int line, int column) {
-		return true;
+		return cells[line][column].isOpen();
 	}
 
 	public String getValue(int line, int column) {
 		return cells[line][column].getValue();
+	}
+
+	public void open(int line, int column) {
+		cells[line][column].open();
 	}
 }

@@ -86,7 +86,13 @@ public class BoardTest {
 	}
 
 	@Test
-	public void allCellsShouldBeOpen() throws Exception {
+	public void allCellsShouldBeClosed() throws Exception {
+		assertThat(board.isOpen(2, 2), is(false));
+	}
+	
+	@Test
+	public void afterOpenCellIsOpen() throws Exception {
+		board.open(2,2);
 		assertThat(board.isOpen(2, 2), is(true));
 	}
 }
