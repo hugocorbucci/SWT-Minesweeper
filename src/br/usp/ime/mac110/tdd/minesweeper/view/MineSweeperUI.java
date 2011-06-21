@@ -3,6 +3,7 @@ package br.usp.ime.mac110.tdd.minesweeper.view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
@@ -28,6 +29,8 @@ public class MineSweeperUI {
 		shell.setLayout(new FillLayout());
 
 		boardCanvas = new Canvas(shell, SWT.DOUBLE_BUFFERED);
+		boardCanvas
+				.setFont(new Font(shell.getDisplay(), "Monaco", 18, SWT.BOLD));
 		boardCanvas.setData(controller.newGame(10, 10, 10));
 		boardCanvas.addPaintListener(new BoardPainter());
 		boardCanvas.addMouseListener(new BoardClickListener(controller));
@@ -40,26 +43,31 @@ public class MineSweeperUI {
 		fileItem.setMenu(fileSubmenu);
 		fileItem.setText("Jogo");
 
-		createNewGameItem(fileSubmenu);
+		createNewGameItem(parent, fileSubmenu);
 
 		createQuitItem(parent, fileSubmenu);
 
 		return menu;
 	}
 
-	private void createNewGameItem(Menu fileSubmenu) {
+	private void createNewGameItem(final Shell parent, Menu fileSubmenu) {
 		MenuItem newItem = new MenuItem(fileSubmenu, SWT.PUSH);
 		newItem.setText("Novo jogo...");
 		newItem.setAccelerator(SWT.MOD1 | 'N');
 		newItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				int width = 10;
-				int height = 10;
-				int bombCount = 10;
+				BoardConfigurationDialog dialog = new BoardConfigurationDialog(
+						parent);
+				BoardConfiguration configuration = dialog.open();
+
+				int width = configuration.getWidth();
+				int height = configuration.getHeight();
+				int bombCount = configuration.getBombs();
 				MineSweeperBoard board = controller.newGame(width, height,
 						bombCount);
 				boardCanvas.setData(board);
+				boardCanvas.redraw();
 			}
 		});
 	}

@@ -5,5 +5,7 @@ public interface MineSweeperBoard {
 
 	public int getHeight();
 
-	public State getState(int line, int column);
+	public boolean isOpen(int line, int column);
+
+	public String getValue(int line, int column);
 }
