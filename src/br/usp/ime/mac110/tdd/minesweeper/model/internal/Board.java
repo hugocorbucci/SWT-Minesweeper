@@ -47,6 +47,12 @@ public class Board implements MineSweeperBoard {
 	}
 
 	public void open(int line, int column) {
-		cells[line][column].open();
+		if (isValid(line, column) && !cells[line][column].isOpen()) {
+			cells[line][column].open();
+			if ("".equals(cells[line][column].getValue()))
+				for (int lineDelta = -1; lineDelta <= 1; lineDelta++)
+					for (int columnDelta = -1; columnDelta <= 1; columnDelta++)
+						open(line + lineDelta, column + columnDelta);
+		}
 	}
 }

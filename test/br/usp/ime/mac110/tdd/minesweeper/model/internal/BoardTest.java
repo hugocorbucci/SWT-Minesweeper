@@ -91,8 +91,18 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void afterOpenCellIsOpen() throws Exception {
+	public void afterOpenCellWithValueItIsOpen() throws Exception {
+		board.createBombAt(2, 2);
 		board.open(2,2);
 		assertThat(board.isOpen(2, 2), is(true));
+	}
+	
+	@Test
+	public void afterOpenEmptyBoardItShouldOpenAllCells() throws Exception {
+		board.open(2, 2);
+		assertThat(board.isOpen(0, 0), is(true));
+		assertThat(board.isOpen(5, 5), is(true));
+		assertThat(board.isOpen(9, 0), is(true));
+		assertThat(board.isOpen(0, 9), is(true));
 	}
 }
