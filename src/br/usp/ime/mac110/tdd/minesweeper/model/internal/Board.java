@@ -39,20 +39,32 @@ public class Board implements MineSweeperBoard {
 	}
 
 	public boolean isOpen(int line, int column) {
-		return cells[line][column].isOpen();
+		return isValid(line, column) && cells[line][column].isOpen();
+	}
+
+	public boolean isBlocked(int line, int column) {
+		return isValid(line, column) && cells[line][column].isBlocked();
 	}
 
 	public String getValue(int line, int column) {
-		return cells[line][column].getValue();
+		if (isValid(line, column))
+			return cells[line][column].getValue();
+		else
+			return "";
 	}
 
 	public void open(int line, int column) {
-		if (isValid(line, column) && !cells[line][column].isOpen()) {
+		if (isValid(line, column) && !cells[line][column].isOpen() && !cells[line][column].isBlocked()) {
 			cells[line][column].open();
 			if ("".equals(cells[line][column].getValue()))
 				for (int lineDelta = -1; lineDelta <= 1; lineDelta++)
 					for (int columnDelta = -1; columnDelta <= 1; columnDelta++)
 						open(line + lineDelta, column + columnDelta);
 		}
+	}
+
+	public void block(int line, int column) {
+		if (isValid(line, column) && !cells[line][column].isOpen()) 
+			cells[line][column].block();
 	}
 }
