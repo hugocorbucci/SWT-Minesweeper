@@ -19,7 +19,7 @@ public class MineSweeper {
 	private static void runUI() {
 		Display display = new Display();
 		Shell mainWindow = new Shell(display, SWT.RESIZE | SWT.DIALOG_TRIM);
-		mainWindow.setText("Bixos IME-USP 2011 - MAC110 - Campo Minado");
+		mainWindow.setText("Curso TDD Agile Brazil 2011 - Campo Minado");
 
 		MineSweeperController controller = new Controller();
 		MineSweeperUI ui = new MineSweeperUI(controller);
