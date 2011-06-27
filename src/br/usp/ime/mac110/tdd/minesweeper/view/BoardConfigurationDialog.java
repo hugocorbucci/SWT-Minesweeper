@@ -102,6 +102,8 @@ public class BoardConfigurationDialog {
 		data.horizontalSpan = 2;
 		data.horizontalAlignment = SWT.END;
 		ok.setLayoutData(data);
+
+		shell.setDefaultButton(ok);
 	}
 
 	private void setGridData(Control control) {

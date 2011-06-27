@@ -28,7 +28,7 @@ public class MineSweeperUI {
 		shell.setMenuBar(menu);
 
 		shell.setLayout(new FillLayout());
-		
+
 		clickListener = new BoardClickListener(controller);
 
 		boardCanvas = new Canvas(shell, SWT.DOUBLE_BUFFERED);
