@@ -25,6 +25,7 @@ public class BoardPainter implements PaintListener {
 		cellColors = new HashMap<String, Color>();
 		Display display = Display.getDefault();
 		cellColors.put("", display.getSystemColor(SWT.COLOR_BLACK));
+		cellColors.put("P", display.getSystemColor(SWT.COLOR_GRAY));
 		cellColors.put("X", display.getSystemColor(SWT.COLOR_RED));
 		cellColors.put("1", display.getSystemColor(SWT.COLOR_BLUE));
 		cellColors.put("2", display.getSystemColor(SWT.COLOR_MAGENTA));
@@ -64,6 +65,8 @@ public class BoardPainter implements PaintListener {
 			int line, int column) {
 		if (board.isOpen(line, column))
 			drawOpenCell(gc, cellArea, board.getValue(line, column));
+		else if (board.isBlocked(line, column))
+			drawBlockedCell(gc, cellArea, board.getValue(line, column));
 		else
 			drawClosedCell(gc, cellArea);
 
@@ -74,11 +77,19 @@ public class BoardPainter implements PaintListener {
 		Point textExtent = gc.textExtent(text);
 		int x = cellArea.x + cellArea.width / 2 - textExtent.x / 2;
 		int y = cellArea.y + cellArea.height / 2 - textExtent.y / 2;
-		
+
 		Color oldForeground = gc.getForeground();
 		gc.setForeground(cellColors.get(text));
 		gc.drawText(text, x, y);
 		gc.setForeground(oldForeground);
+	}
+
+	private void drawBlockedCell(GC gc, Rectangle cellArea, String value) {
+		Color oldBackground = gc.getBackground();
+		gc.setBackground(HIDDEN_CELL_COLOR);
+		gc.fillRectangle(cellArea);
+		drawOpenCell(gc, cellArea, "P");
+		gc.setBackground(oldBackground);
 	}
 
 	private void drawClosedCell(GC gc, Rectangle cellArea) {

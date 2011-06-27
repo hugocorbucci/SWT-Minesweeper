@@ -8,6 +8,10 @@ public class Controller implements MineSweeperController {
 		return null;
 	}
 
-	public void open(int line, int column) {
+	public boolean open(int line, int column) {
+		return true;
+	}
+
+	public void block(int line, int column) {
 	}
 }

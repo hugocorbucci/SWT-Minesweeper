@@ -17,6 +17,7 @@ import br.usp.ime.mac110.tdd.minesweeper.model.MineSweeperBoard;
 public class MineSweeperUI {
 	private final MineSweeperController controller;
 	private Canvas boardCanvas;
+	private BoardClickListener clickListener;
 
 	public MineSweeperUI(MineSweeperController controller) {
 		this.controller = controller;
@@ -27,13 +28,15 @@ public class MineSweeperUI {
 		shell.setMenuBar(menu);
 
 		shell.setLayout(new FillLayout());
+		
+		clickListener = new BoardClickListener(controller);
 
 		boardCanvas = new Canvas(shell, SWT.DOUBLE_BUFFERED);
 		boardCanvas
 				.setFont(new Font(shell.getDisplay(), "Monaco", 18, SWT.BOLD));
 		boardCanvas.setData(controller.newGame(10, 10, 10));
 		boardCanvas.addPaintListener(new BoardPainter());
-		boardCanvas.addMouseListener(new BoardClickListener(controller));
+		boardCanvas.addMouseListener(clickListener);
 	}
 
 	private Menu createMenu(final Shell parent) {
@@ -64,9 +67,11 @@ public class MineSweeperUI {
 				int width = configuration.getWidth();
 				int height = configuration.getHeight();
 				int bombCount = configuration.getBombs();
+				boardCanvas.removeMouseListener(clickListener);
 				MineSweeperBoard board = controller.newGame(width, height,
 						bombCount);
 				boardCanvas.setData(board);
+				boardCanvas.addMouseListener(clickListener);
 				boardCanvas.redraw();
 			}
 		});
